@@ -1,0 +1,28 @@
+{
+  "name": "resume-two-stacks",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Сайт-резюме Тимофея Гаврикова в двух стеках (Next.js + Vue) с общим источником данных и генерацией PDF на Node.js.",
+  "type": "module",
+  "workspaces": [
+    "apps/next",
+    "apps/vue"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/sync-content.mjs",
+    "sync": "node scripts/sync-content.mjs",
+    "pdf": "node scripts/generate-pdf.mjs",
+    "prepare-data": "npm run sync && npm run pdf",
+    "dev:next": "npm run sync && npm run dev --workspace apps/next",
+    "dev:vue": "npm run sync && npm run dev --workspace apps/vue",
+    "build:next": "npm run build --workspace apps/next",
+    "build:vue": "npm run build --workspace apps/vue",
+    "build": "npm run prepare-data && npm run build:next && npm run build:vue"
+  },
+  "devDependencies": {
+    "puppeteer": "^23.10.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,29 @@
+# Зависимости
+node_modules/
+
+# Сгенерированные копии данных (единственный источник — content/*)
+apps/next/data/resume.json
+apps/next/lib/resume-types.ts
+apps/next/app/theme.css
+apps/vue/src/data/resume.json
+apps/vue/src/lib/resume-types.ts
+apps/vue/src/theme.css
+
+# Сгенерированный PDF (собирается из resume.json)
+apps/next/public/resume.pdf
+apps/vue/public/resume.pdf
+
+# Сборки
+apps/next/.next/
+apps/next/out/
+apps/vue/dist/
+public/
+
+# Next.js
+next-env.d.ts
+
+# Прочее
+.DS_Store
+*.log
+.env
+.env.local

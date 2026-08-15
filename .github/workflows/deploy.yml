@@ -1,0 +1,77 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        # package-lock.json генерируется на macOS и не содержит linux-бинарников
+        # опциональных зависимостей (rollup/esbuild) — известный баг npm (#4828).
+        # Поэтому в CI ставим начисто через npm install под linux-раннер.
+        run: |
+          rm -f package-lock.json
+          npm install --no-audit --no-fund
+
+      # Puppeteer рендерит PDF в headless Chromium — ставим системные библиотеки.
+      - name: Install Chrome libs for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 \
+            libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
+            libgbm1 libpango-1.0-0 libcairo2 libasound2t64 || true
+
+      - name: Generate PDF (Node.js → resume.pdf)
+        continue-on-error: true
+        run: npm run pdf
+
+      - name: Build React version (Next.js)
+        run: npm run build:next
+        env:
+          NEXT_PUBLIC_SITE_BASE: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_VUE_URL: vue/
+
+      - name: Build Vue version (Vite)
+        run: npm run build:vue
+
+      - name: Assemble site (Next → /, Vue → /vue)
+        run: |
+          rm -rf public
+          mkdir -p public
+          cp -r apps/next/out/. public/
+          mkdir -p public/vue
+          cp -r apps/vue/dist/. public/vue/
+          touch public/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
