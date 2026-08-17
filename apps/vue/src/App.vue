@@ -6,6 +6,15 @@ const r = resume;
 const telHref = `tel:${r.contacts.phone.replace(/[^+\d]/g, '')}`;
 const ghShort = r.contacts.github.replace('https://', '');
 const year = new Date().getFullYear();
+
+function points(n: number) {
+  const last = n % 10;
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 14) return 'пунктов';
+  if (last === 1) return 'пункт';
+  if (last >= 2 && last <= 4) return 'пункта';
+  return 'пунктов';
+}
 </script>
 
 <template>
@@ -107,11 +116,16 @@ const year = new Date().getFullYear();
             <span v-for="b in p.brands" :key="b" class="brand-chip">{{ b }}</span>
           </div>
 
-          <ul v-if="p.highlights.length" class="highlights">
-            <li v-for="h in p.highlights" :key="h.title" class="highlight">
-              <span class="highlight-title">{{ h.title }}.</span> {{ h.text }}
-            </li>
-          </ul>
+          <details v-if="p.highlights.length" class="details">
+            <summary class="details-summary">
+              Что внутри — {{ p.highlights.length }} {{ points(p.highlights.length) }}
+            </summary>
+            <ul class="highlights">
+              <li v-for="h in p.highlights" :key="h.title" class="highlight">
+                <span class="highlight-title">{{ h.title }}.</span> {{ h.text }}
+              </li>
+            </ul>
+          </details>
 
           <div v-if="p.metrics && p.metrics.length" class="metrics">
             <span v-for="m in p.metrics" :key="m" class="metric">{{ m }}</span>

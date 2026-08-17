@@ -15,6 +15,15 @@ function Chips({ items, mono }: { items: string[]; mono?: boolean }) {
   );
 }
 
+function points(n: number) {
+  const last = n % 10;
+  const tens = n % 100;
+  if (tens >= 11 && tens <= 14) return 'пунктов';
+  if (last === 1) return 'пункт';
+  if (last >= 2 && last <= 4) return 'пункта';
+  return 'пунктов';
+}
+
 export default function Home() {
   const telHref = `tel:${r.contacts.phone.replace(/[^+\d]/g, '')}`;
   const ghShort = r.contacts.github.replace('https://', '');
@@ -130,13 +139,18 @@ export default function Home() {
                     </div>
                   )}
                   {p.highlights.length > 0 && (
-                    <ul className="highlights">
-                      {p.highlights.map((h) => (
-                        <li className="highlight" key={h.title}>
-                          <span className="highlight-title">{h.title}.</span> {h.text}
-                        </li>
-                      ))}
-                    </ul>
+                    <details className="details">
+                      <summary className="details-summary">
+                        Что внутри — {p.highlights.length} {points(p.highlights.length)}
+                      </summary>
+                      <ul className="highlights">
+                        {p.highlights.map((h) => (
+                          <li className="highlight" key={h.title}>
+                            <span className="highlight-title">{h.title}.</span> {h.text}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
                   )}
                   {p.metrics && p.metrics.length > 0 && (
                     <div className="metrics">
