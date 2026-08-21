@@ -47,13 +47,25 @@ export default function Home() {
             <div className="card-label">Контакты</div>
             <div className="contact-list">
               <a className="contact-line" href={telHref}>
-                <PhoneIcon /> {r.contacts.phone}
+                <PhoneIcon />
+                <div>
+                  <div className="contact-k">Телефон</div>
+                  <div className="contact-v">{r.contacts.phone}</div>
+                </div>
               </a>
               <a className="contact-line" href={`mailto:${r.contacts.email}`}>
-                <MailIcon /> {r.contacts.email}
+                <MailIcon />
+                <div>
+                  <div className="contact-k">Почта</div>
+                  <div className="contact-v">{r.contacts.email}</div>
+                </div>
               </a>
               <a className="contact-line" href={r.contacts.github} target="_blank" rel="noreferrer">
-                <GitHubIcon /> {ghShort}
+                <GitHubIcon />
+                <div>
+                  <div className="contact-k">GitHub</div>
+                  <div className="contact-v">{ghShort}</div>
+                </div>
               </a>
             </div>
           </section>

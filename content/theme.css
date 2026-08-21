@@ -72,7 +72,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Bento grid */
 .container { max-width: var(--maxw); margin: 0 auto; padding: 24px; }
-.bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start; }
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
 .span-1 { grid-column: span 1; }
 .span-2 { grid-column: span 2; }
 .span-3 { grid-column: span 3; }
@@ -91,10 +91,12 @@ a { color: inherit; text-decoration: none; }
 .hero-tagline { margin-top: 14px; color: var(--on-surface-variant); font-size: 15px; max-width: 60ch; line-height: 1.6; }
 
 /* Contacts card */
-.contact-list { display: grid; gap: 12px; }
-.contact-line { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--on-surface); }
-.contact-line:hover { color: var(--primary); }
-.contact-line svg { width: 18px; height: 18px; color: var(--primary); flex: none; }
+.contact-list { display: grid; gap: 16px; }
+.contact-line { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--on-surface); }
+.contact-line svg { width: 20px; height: 20px; color: var(--primary); flex: none; }
+.contact-k { font-size: 11px; color: var(--on-surface-variant); text-transform: uppercase; letter-spacing: .5px; }
+.contact-v { font-size: 14px; color: var(--on-surface); margin-top: 1px; }
+.contact-line:hover .contact-v { color: var(--primary); }
 
 /* Fact tile */
 .fact { padding: 16px 18px; }
