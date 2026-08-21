@@ -31,6 +31,14 @@ export function DownloadIcon() {
   );
 }
 
+export function ChevronIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
 export function ReactLogo() {
   return (
     <svg viewBox="-11.5 -10.23 23 20.46">
