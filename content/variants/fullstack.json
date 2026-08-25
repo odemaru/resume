@@ -1,0 +1,45 @@
+{
+  "title": "Fullstack-разработчик",
+  "tagline": "Фронтенд на React/TypeScript и бэкенд на Python — от макетов Figma до прода в Kubernetes.",
+  "about": "Fullstack-разработчик из Новосибирска. Год с лишним в одиночку веду фронтенд спортивной платформы на React 19 / TypeScript — от макетов Figma до прода за nginx в Kubernetes, с плотной интеграцией в бэкенд из 8 микросервисов и самостоятельным разбором прод-инцидентов на всём стеке. Параллельно построил и сопровождаю 10 production-парсеров автомобильных брендов на Python. До этого — 2,5 года в QA-автоматизации desktop-приложений на C#/Avalonia и Python.",
+  "skills": [
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "Tailwind",
+        "CSS Modules",
+        "Vite",
+        "React Router",
+        "PWA / Service Worker"
+      ]
+    },
+    {
+      "group": "Backend",
+      "items": [
+        "Python",
+        "PHP",
+        "Java",
+        "REST",
+        "GraphQL",
+        "PostgreSQL",
+        "SQL"
+      ]
+    },
+    {
+      "group": "Инструменты и DevOps",
+      "items": [
+        "Git",
+        "GitHub Actions",
+        "Docker",
+        "nginx",
+        "Kubernetes",
+        "Selenium",
+        "curl_cffi"
+      ]
+    }
+  ]
+}

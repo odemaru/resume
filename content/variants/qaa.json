@@ -1,0 +1,57 @@
+{
+  "title": "QAA-инженер",
+  "tagline": "Автоматизация тестирования на Python и Java — от тест-дизайна до прогона в CI. Разработчик по бэкграунду: ищу причину дефекта, а не симптом.",
+  "about": "QAA-инженер из Новосибирска. Два года и восемь месяцев автоматизировал тестирование desktop-приложений в ННТЦ: тест-кейсы, headless-прогоны на C#/Avalonia и Python, собственный инструментарий под задачи команды. Последние полтора года — fullstack-разработка: веду фронтенд спортивной платформы на React 19 и сопровождаю 10 парсеров на Python, сам разбираю прод-инциденты — от отвалившегося service worker до упёршегося пула соединений PostgreSQL. В тестировании это и есть моё преимущество: я знаю, где система ломается, потому что сам её собирал.",
+  "skills": [
+    {
+      "group": "Тестирование",
+      "items": [
+        "pytest",
+        "JUnit 5",
+        "Selenide",
+        "Selenium",
+        "Allure",
+        "Тест-дизайн",
+        "Баг-репорты",
+        "REST API",
+        "JSON Schema",
+        "Headless-тестирование"
+      ]
+    },
+    {
+      "group": "Языки",
+      "items": [
+        "Python",
+        "Java",
+        "C#",
+        "TypeScript",
+        "JavaScript",
+        "SQL"
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "CSS Modules",
+        "Vite",
+        "React Router",
+        "PWA / Service Worker"
+      ]
+    },
+    {
+      "group": "Инструменты и DevOps",
+      "items": [
+        "Git",
+        "GitHub Actions",
+        "Docker",
+        "nginx",
+        "Kubernetes",
+        "PostgreSQL",
+        "curl_cffi"
+      ]
+    }
+  ]
+}

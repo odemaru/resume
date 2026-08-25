@@ -4,11 +4,11 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
+import { loadVariant, variants } from './variants.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const r = (...p) => resolve(root, ...p);
 
-const outputs = [r('apps/next/public/resume.pdf'), r('apps/vue/public/resume.pdf')];
 const accent = '#0b57d0';
 
 const esc = (s = '') =>
@@ -148,24 +148,36 @@ function html(d) {
 </div></body></html>`;
 }
 
-const data = JSON.parse(readFileSync(r('content/resume.json'), 'utf8'));
-if (data.photo) {
-  data.photoDataUri = `data:image/jpeg;base64,${readFileSync(r('content', data.photo)).toString('base64')}`;
-}
 const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
-const page = await browser.newPage();
-await page.setContent(html(data), { waitUntil: 'networkidle0' });
-// Поля задаются здесь, а не отступом в вёрстке: CSS-padding достаётся только
-// первой и последней странице, а поля Puppeteer — каждой.
-const pdf = await page.pdf({
-  format: 'A4',
-  printBackground: true,
-  margin: { top: '14mm', right: '12mm', bottom: '12mm', left: '12mm' },
-});
-await browser.close();
 
-for (const out of outputs) {
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, pdf);
+for (const v of variants) {
+  const data = loadVariant(root, v.id);
+  // Фото читаем с диска и вшиваем в разметку: setContent отдаётся браузеру
+  // без базового адреса, и относительный путь до файла не разрешится.
+  if (data.photo) {
+    data.photoDataUri = `data:image/jpeg;base64,${readFileSync(r('content', data.photo)).toString('base64')}`;
+  }
+
+  const page = await browser.newPage();
+  await page.setContent(html(data), { waitUntil: 'networkidle0' });
+  // Поля задаются здесь, а не отступом в вёрстке: CSS-padding достаётся только
+  // первой и последней странице, а поля Puppeteer — каждой.
+  const pdf = await page.pdf({
+    format: 'A4',
+    printBackground: true,
+    margin: { top: '14mm', right: '12mm', bottom: '12mm', left: '12mm' },
+  });
+  await page.close();
+
+  // Vue-сборке достаётся только основной вариант — она собирается из него же.
+  const outputs = [r('apps/next/public', v.pdf)];
+  if (v === variants[0]) outputs.push(r('apps/vue/public', v.pdf));
+
+  for (const out of outputs) {
+    mkdirSync(dirname(out), { recursive: true });
+    writeFileSync(out, pdf);
+  }
+  console.log(`${v.pdf}: ${(pdf.length / 1024).toFixed(0)} KB → ${outputs.length} шт.`);
 }
-console.log(`wrote resume.pdf (${(pdf.length / 1024).toFixed(0)} KB) to ${outputs.length} apps`);
+
+await browser.close();
