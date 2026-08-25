@@ -1,8 +1,9 @@
 {
   "name": "Гавриков Тимофей Михайлович",
   "shortName": "Тимофей Гавриков",
-  "title": "Fullstack-разработчик",
-  "tagline": "Фронтенд на React/TypeScript и бэкенд на Python — от макетов Figma до прода в Kubernetes.",
+  "photo": "photo.jpg",
+  "title": "QAA-инженер",
+  "tagline": "Автоматизация тестирования на Python и Java — от тест-дизайна до прогона в CI. Разработчик по бэкграунду: ищу причину дефекта, а не симптом.",
   "age": 22,
   "birthDate": "2004-05-24",
   "location": "Новосибирск",
@@ -10,14 +11,21 @@
   "workPermit": "Россия",
   "relocation": "Не готов к переезду, готов к редким командировкам",
   "experienceTotal": "4 года 1 месяц",
-  "employmentTypes": ["Полная занятость", "Частичная занятость", "Проектная работа"],
-  "workFormats": ["Удалённо", "Гибрид"],
+  "employmentTypes": [
+    "Полная занятость",
+    "Частичная занятость",
+    "Проектная работа"
+  ],
+  "workFormats": [
+    "Удалённо",
+    "Гибрид"
+  ],
   "contacts": {
     "phone": "+7 (913) 065-41-90",
     "email": "gavrikovtimofey@gmail.com",
     "github": "https://github.com/odemaru"
   },
-  "about": "Fullstack-разработчик из Новосибирска. Год с лишним в одиночку веду фронтенд спортивной платформы на React 19 / TypeScript — от макетов Figma до прода за nginx в Kubernetes, с плотной интеграцией в бэкенд из 8 микросервисов и самостоятельным разбором прод-инцидентов на всём стеке. Параллельно построил и сопровождаю 10 production-парсеров автомобильных брендов на Python. До этого — 2,5 года в QA-автоматизации desktop-приложений на C#/Avalonia и Python.",
+  "about": "QAA-инженер из Новосибирска. Два года и восемь месяцев автоматизировал тестирование desktop-приложений в ННТЦ: тест-кейсы, headless-прогоны на C#/Avalonia и Python, собственный инструментарий под задачи команды. Последние полтора года — fullstack-разработка: веду фронтенд спортивной платформы на React 19 и сопровождаю 10 парсеров на Python, сам разбираю прод-инциденты — от отвалившегося service worker до упёршегося пула соединений PostgreSQL. В тестировании это и есть моё преимущество: я знаю, где система ломается, потому что сам её собирал.",
   "experience": [
     {
       "company": "Deford",
@@ -34,7 +42,22 @@
           "url": "https://спортдлявсех.бел",
           "role": "Frontend / Full-stack",
           "summary": "В одиночку вёл весь фронтенд: клиентское PWA и отдельное приложение промоутера, ~260 коммитов, от макетов Figma до прода за nginx в Kubernetes. Плотная интеграция с бэкендом из 8 микросервисов, самостоятельный разбор прод-инцидентов на всём стеке.",
-          "stack": ["React 19", "TypeScript", "Vite", "React Router", "Tailwind", "CSS Modules", "axios", "PWA / Service Worker", "Web Push (VAPID)", "html5-qrcode", "Yandex Metrika", "Docker", "nginx", "Kubernetes"],
+          "stack": [
+            "React 19",
+            "TypeScript",
+            "Vite",
+            "React Router",
+            "Tailwind",
+            "CSS Modules",
+            "axios",
+            "PWA / Service Worker",
+            "Web Push (VAPID)",
+            "html5-qrcode",
+            "Yandex Metrika",
+            "Docker",
+            "nginx",
+            "Kubernetes"
+          ],
           "highlights": [
             {
               "title": "Архитектура",
@@ -73,13 +96,29 @@
               "text": "Трекинг SPA-переходов в Yandex Metrika и Meta Pixel, сборка Vite, образ Docker, отдача через nginx; отдельно собирал лендинги под кампании."
             }
           ],
-          "metrics": ["~260 коммитов", "~24 экрана", "38 компонентов", "16 API-модулей", "31 маршрут", "~41 тыс. строк"]
+          "metrics": [
+            "~260 коммитов",
+            "~24 экрана",
+            "38 компонентов",
+            "16 API-модулей",
+            "31 маршрут",
+            "~41 тыс. строк"
+          ]
         },
         {
           "name": "Парсеры автомобильных брендов — 10 проектов",
           "role": "Backend",
           "summary": "Построил и сопровождаю набор из 10 самостоятельных production-парсеров под премиальные бренды: Mercedes-Benz, BMW, Audi, Porsche, Volvo, Volkswagen, Bentley, Rolls-Royce, Ferrari, Land Rover.",
-          "stack": ["Python", "curl_cffi", "Selenium / selenium-wire", "requests", "GraphQL/REST", "Google Sheets API", "Yandex Disk API", "прокси"],
+          "stack": [
+            "Python",
+            "curl_cffi",
+            "Selenium / selenium-wire",
+            "requests",
+            "GraphQL/REST",
+            "Google Sheets API",
+            "Yandex Disk API",
+            "прокси"
+          ],
           "highlights": [
             {
               "title": "Обход антибота",
@@ -98,7 +137,18 @@
               "text": "Выгрузка результатов в Google Sheets и Яндекс.Диск, планировщик запусков и логирование; общий переиспользуемый шаблон, чтобы поднимать парсер под новый бренд за минимум времени."
             }
           ],
-          "brands": ["Mercedes-Benz", "BMW", "Audi", "Porsche", "Volvo", "Volkswagen", "Bentley", "Rolls-Royce", "Ferrari", "Land Rover"]
+          "brands": [
+            "Mercedes-Benz",
+            "BMW",
+            "Audi",
+            "Porsche",
+            "Volvo",
+            "Volkswagen",
+            "Bentley",
+            "Rolls-Royce",
+            "Ferrari",
+            "Land Rover"
+          ]
         },
         {
           "name": "Начальная проектировка backend-микросервисов",
@@ -120,8 +170,14 @@
         {
           "name": "Тестирование desktop-приложения",
           "role": "QA Automation",
-          "summary": "Занимался тестированием фронта desktop-приложения на Python и C# Avalonia (Headless). Писал тест-кейсы, вёл отчётность. Разрабатывал инструментарий на C# Avalonia для тестирования.",
-          "stack": ["Python", "C#", "Avalonia", "Headless-тестирование"],
+          "summary": "Автоматизировал проверку интерфейса desktop-приложения: headless-прогоны на C#/Avalonia и Python, тест-кейсы и отчётность по результатам. Под задачи команды разрабатывал собственный инструментарий для тестирования на C#/Avalonia.",
+          "stack": [
+            "Python",
+            "C#",
+            "Avalonia",
+            "Headless-тестирование",
+            "Тест-кейсы"
+          ],
           "highlights": []
         }
       ]
@@ -129,16 +185,54 @@
   ],
   "skills": [
     {
-      "group": "Frontend",
-      "items": ["React", "TypeScript", "JavaScript", "HTML", "Tailwind", "CSS Modules", "Vite", "React Router", "PWA / Service Worker"]
+      "group": "Тестирование",
+      "items": [
+        "pytest",
+        "JUnit 5",
+        "Selenide",
+        "Selenium",
+        "Allure",
+        "Тест-дизайн",
+        "Баг-репорты",
+        "REST API",
+        "JSON Schema",
+        "Headless-тестирование"
+      ]
     },
     {
-      "group": "Backend",
-      "items": ["Python", "PHP", "Java", "REST", "GraphQL", "PostgreSQL", "SQL"]
+      "group": "Языки",
+      "items": [
+        "Python",
+        "Java",
+        "C#",
+        "TypeScript",
+        "JavaScript",
+        "SQL"
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "CSS Modules",
+        "Vite",
+        "React Router",
+        "PWA / Service Worker"
+      ]
     },
     {
       "group": "Инструменты и DevOps",
-      "items": ["Git", "Docker", "nginx", "Kubernetes", "Selenium", "curl_cffi"]
+      "items": [
+        "Git",
+        "GitHub Actions",
+        "Docker",
+        "nginx",
+        "Kubernetes",
+        "PostgreSQL",
+        "curl_cffi"
+      ]
     }
   ],
   "education": [
@@ -151,14 +245,25 @@
     }
   ],
   "languages": [
-    { "name": "Русский", "level": "Родной" },
-    { "name": "Английский", "level": "B2 — Средне-продвинутый" }
+    {
+      "name": "Русский",
+      "level": "Родной"
+    },
+    {
+      "name": "Английский",
+      "level": "B2 — Средне-продвинутый"
+    }
   ],
   "petProjects": [
     {
-      "name": "Автоплатежи с криптокошелька",
-      "description": "Небольшой сервис для пакетных выплат: на вход список адресов и сумм, дальше сам формирует, подписывает и отправляет транзакции с кошелька, отслеживает подтверждения в сети и переотправляет упавшие.",
-      "url": "https://github.com/odemaru"
+      "name": "Тестирование API 2GIS",
+      "description": "Тестовое задание для QA: 18 тест-кейсов, 44 автотеста на pytest и баг-репорт с шестью дефектами. Каждый найденный дефект закреплён тестом со strict xfail — прогон останется зелёным, пока баг воспроизводится, и упадёт, когда его починят.",
+      "url": "https://github.com/odemaru/2gis_testing"
+    },
+    {
+      "name": "UI-тесты интернет-магазина",
+      "description": "Автотесты веб-интерфейса на Java и Selenide: 22 тест-кейса, 61 автотест и баг-репорт с восемью дефектами. Тест-дизайн на классах эквивалентности, граничных значениях, попарном покрытии и таблице решений. Прогон в CI идёт по стенду, который поднимается в докере.",
+      "url": "https://github.com/odemaru/Selenide_testing"
     }
   ]
 }

@@ -61,6 +61,8 @@ export interface PetProject {
 export interface Resume {
   name: string;
   shortName: string;
+  /** Файл фотографии в public каждого приложения. */
+  photo?: string;
   title: string;
   tagline: string;
   age: number;

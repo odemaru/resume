@@ -55,7 +55,12 @@ function html(d) {
     .map((ed) => `<div class="edu"><strong>${esc(ed.institution)}</strong> — ${esc(ed.degree)}, ${esc(ed.year)}<div class="muted">${esc(ed.faculty)}</div></div>`)
     .join('');
   const languages = d.languages.map((l) => `${esc(l.name)} — ${esc(l.level)}`).join(' · ');
-  const pets = d.petProjects.map((p) => `<div class="pet"><strong>${esc(p.name)}.</strong> ${esc(p.description)}</div>`).join('');
+  const pets = d.petProjects
+    .map((p) => {
+      const name = p.url ? `<a href="${esc(p.url)}">${esc(p.name)}</a>` : esc(p.name);
+      return `<div class="pet"><strong>${name}.</strong> ${esc(p.description)}</div>`;
+    })
+    .join('');
 
   return `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><style>
@@ -63,11 +68,13 @@ function html(d) {
   html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   body { font: 10.5px/1.5 'Roboto', -apple-system, 'Segoe UI', Arial, sans-serif; color: #1a1c1e; }
   a { color: ${accent}; text-decoration: none; }
-  .page { padding: 34px 40px; }
-  header { border-bottom: 2px solid ${accent}; padding-bottom: 14px; margin-bottom: 16px; }
+  .page { padding: 0; }
+  header { border-bottom: 2px solid ${accent}; padding-bottom: 14px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 18px; }
+  .header-text { flex: 1; min-width: 0; }
+  .photo { width: 78px; height: 78px; border-radius: 50%; object-fit: cover; flex: none; order: 2; }
   h1 { font-size: 24px; font-weight: 500; }
   .title { color: ${accent}; font-size: 13px; font-weight: 500; margin-top: 2px; }
-  .tagline { color: #43474e; margin-top: 6px; font-size: 11px; max-width: 82%; }
+  .tagline { color: #43474e; margin-top: 6px; font-size: 11px; }
   .contacts { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 10px; color: #33333c; }
   .contacts b { color: #6c6c78; font-weight: 500; }
   h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: ${accent}; margin: 18px 0 9px; border-bottom: 1px solid #e2e2e9; padding-bottom: 4px; }
@@ -94,8 +101,20 @@ function html(d) {
   .skill-group h4 { font-size: 10px; margin-bottom: 4px; color: #33333c; }
   .edu, .pet { margin-bottom: 6px; color: #33333c; }
   .footer { margin-top: 16px; text-align: center; color: #9a9aa6; font-size: 8.5px; }
+
+  /* Разрывы страниц. Без этих правил карточка проекта рвётся пополам:
+     заголовок остаётся внизу листа, текст уезжает на следующий.
+     Запрет ставится на мелкие единицы, а не на блок целиком — иначе
+     длинный проект целиком уедет на новую страницу и оставит пустоту. */
+  header { break-inside: avoid; }
+  h3 { break-after: avoid; }
+  .job-head, .project-head { break-inside: avoid; break-after: avoid; }
+  .highlights li, .skill-group, .edu, .pet { break-inside: avoid; }
+  .chips, .metrics { break-inside: avoid; }
 </style></head><body><div class="page">
   <header>
+    ${d.photoDataUri ? `<img class="photo" src="${d.photoDataUri}" alt="">` : ''}
+    <div class="header-text">
     <h1>${esc(d.name)}</h1>
     <div class="title">${esc(d.title)} · опыт ${esc(d.experienceTotal)}</div>
     <div class="tagline">${esc(d.tagline)}</div>
@@ -105,6 +124,7 @@ function html(d) {
       <span><b>GitHub:</b> <a href="${esc(d.contacts.github)}">${esc(d.contacts.github.replace('https://', ''))}</a></span>
       <span><b>Город:</b> ${esc(d.location)}</span>
       <span><b>Формат:</b> ${d.workFormats.map(esc).join(', ')}</span>
+    </div>
     </div>
   </header>
 
@@ -129,10 +149,19 @@ function html(d) {
 }
 
 const data = JSON.parse(readFileSync(r('content/resume.json'), 'utf8'));
+if (data.photo) {
+  data.photoDataUri = `data:image/jpeg;base64,${readFileSync(r('content', data.photo)).toString('base64')}`;
+}
 const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
 const page = await browser.newPage();
 await page.setContent(html(data), { waitUntil: 'networkidle0' });
-const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
+// Поля задаются здесь, а не отступом в вёрстке: CSS-padding достаётся только
+// первой и последней странице, а поля Puppeteer — каждой.
+const pdf = await page.pdf({
+  format: 'A4',
+  printBackground: true,
+  margin: { top: '14mm', right: '12mm', bottom: '12mm', left: '12mm' },
+});
 await browser.close();
 
 for (const out of outputs) {

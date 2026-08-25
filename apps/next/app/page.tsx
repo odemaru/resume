@@ -32,7 +32,12 @@ export default function Home() {
       <main className="container">
         <div className="bento">
           <header className="card hero span-3">
-            <div className="hero-avatar">ТГ</div>
+            {r.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="hero-avatar" src={r.photo} alt={r.name} width={96} height={96} />
+            ) : (
+              <div className="hero-avatar">{r.shortName.slice(0, 1)}</div>
+            )}
             <div className="hero-eyebrow">
               <span className="pulse" /> Открыт к предложениям
             </div>

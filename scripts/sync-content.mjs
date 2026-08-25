@@ -8,8 +8,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const r = (...p) => resolve(root, ...p);
 
 const targets = [
-  { json: r('apps/next/data/resume.json'), types: r('apps/next/lib/resume-types.ts'), css: r('apps/next/app/theme.css') },
-  { json: r('apps/vue/src/data/resume.json'), types: r('apps/vue/src/lib/resume-types.ts'), css: r('apps/vue/src/theme.css') },
+  { json: r('apps/next/data/resume.json'), types: r('apps/next/lib/resume-types.ts'), css: r('apps/next/app/theme.css'), photo: r('apps/next/public/photo.jpg') },
+  { json: r('apps/vue/src/data/resume.json'), types: r('apps/vue/src/lib/resume-types.ts'), css: r('apps/vue/src/theme.css'), photo: r('apps/vue/public/photo.jpg') },
 ];
 
 const data = JSON.parse(readFileSync(r('content/resume.json'), 'utf8'));
@@ -23,6 +23,10 @@ const css = readFileSync(r('content/theme.css'), 'utf8');
 for (const t of targets) {
   for (const f of [t.json, t.types, t.css]) mkdirSync(dirname(f), { recursive: true });
   copyFileSync(r('content/resume.json'), t.json);
+  if (data.photo) {
+    mkdirSync(dirname(t.photo), { recursive: true });
+    copyFileSync(r('content', data.photo), t.photo);
+  }
   writeFileSync(t.types, types);
   writeFileSync(t.css, css);
 }

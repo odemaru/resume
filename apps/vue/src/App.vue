@@ -20,7 +20,8 @@ const facts: [string, string][] = [
   <main class="container">
     <div class="bento">
       <header class="card hero span-3">
-        <div class="hero-avatar">ТГ</div>
+        <img v-if="r.photo" class="hero-avatar" :src="r.photo" :alt="r.name" width="96" height="96" />
+        <div v-else class="hero-avatar">{{ r.shortName.slice(0, 1) }}</div>
         <div class="hero-eyebrow"><span class="pulse" /> Открыт к предложениям</div>
         <h1 class="hero-name">{{ r.name }}</h1>
         <p class="hero-title"><b>{{ r.title }}</b> · опыт {{ r.experienceTotal }}</p>
