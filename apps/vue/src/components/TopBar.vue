@@ -1,6 +1,7 @@
 <script setup lang="ts">
-// '../' points back to the Next build one level up
-const NEXT_URL = import.meta.env.VITE_NEXT_URL || '../';
+// Ссылка ведёт на ту страницу Next, из которой собрана эта сборка,
+// иначе переключатель уводил бы на резюме с другим текстом.
+const NEXT_URL = import.meta.env.VITE_NEXT_URL || '../fullstack/';
 </script>
 
 <template>

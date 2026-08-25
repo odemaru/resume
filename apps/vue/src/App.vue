@@ -159,6 +159,6 @@ const facts: [string, string][] = [
 
   <footer class="footer">
     <div>© {{ year }} {{ r.shortName }} · {{ r.title }}</div>
-    <div class="footer-note">Vue 3 + Vite · <a href="../">та же страница на Next.js</a></div>
+    <div class="footer-note">Vue 3 + Vite · <a href="../fullstack/">та же страница на Next.js</a></div>
   </footer>
 </template>

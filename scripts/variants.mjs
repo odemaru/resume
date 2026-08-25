@@ -9,8 +9,18 @@ import { resolve } from 'node:path';
 
 export const variants = [
   { id: 'qaa', data: 'resume.json', pdf: 'resume.pdf' },
-  { id: 'fullstack', data: 'resume-fullstack.json', pdf: 'resume-fullstack.pdf' },
+  { id: 'fullstack', data: 'resume-fullstack.json', pdf: 'resume-fullstack.pdf', vue: true },
 ];
+
+/**
+ * Вариант, из которого собирается Vue-версия.
+ *
+ * Она существует как витрина «одни данные, два фреймворка» и потому уместна
+ * на резюме разработчика: нанимающему в тестирование выбор между React и Vue
+ * ничего не говорит. Переключатель стека живёт на той же странице, что и эта
+ * сборка, иначе он уводил бы на другой текст.
+ */
+export const vueVariant = variants.find((v) => v.vue) ?? variants[0];
 
 const required = ['name', 'title', 'tagline', 'about', 'skills', 'experience'];
 

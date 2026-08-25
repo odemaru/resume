@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
-import { loadVariant, variants } from './variants.mjs';
+import { loadVariant, variants, vueVariant } from './variants.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const r = (...p) => resolve(root, ...p);
@@ -169,9 +169,10 @@ for (const v of variants) {
   });
   await page.close();
 
-  // Vue-сборке достаётся только основной вариант — она собирается из него же.
+  // Vue-сборке достаётся её собственный вариант. Имя resume.pdf локально
+  // для неё и зашито в её же ссылке, поэтому файл кладётся под ним.
   const outputs = [r('apps/next/public', v.pdf)];
-  if (v === variants[0]) outputs.push(r('apps/vue/public', v.pdf));
+  if (v === vueVariant) outputs.push(r('apps/vue/public/resume.pdf'));
 
   for (const out of outputs) {
     mkdirSync(dirname(out), { recursive: true });

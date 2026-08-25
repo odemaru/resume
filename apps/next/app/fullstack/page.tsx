@@ -14,5 +14,5 @@ export const metadata: Metadata = {
 
 export default function Fullstack() {
   // Страница лежит на уровень глубже: фото и PDF ищутся от корня сайта.
-  return <Resume data={resumeFullstack} pdf="resume-fullstack.pdf" base="../" />;
+  return <Resume data={resumeFullstack} pdf="resume-fullstack.pdf" base="../" showVue />;
 }
