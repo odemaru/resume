@@ -1,17 +1,20 @@
 # Зависимости
 node_modules/
 
-# Сгенерированные копии данных (единственный источник — content/*)
-apps/next/data/resume.json
+# Сгенерированные копии данных (единственный источник в content/)
+apps/next/data/
 apps/next/lib/resume-types.ts
 apps/next/app/theme.css
-apps/vue/src/data/resume.json
+apps/vue/src/data/
 apps/vue/src/lib/resume-types.ts
 apps/vue/src/theme.css
+apps/next/public/photo.jpg
+apps/vue/public/photo.jpg
 
-# Сгенерированный PDF (собирается из resume.json)
-apps/next/public/resume.pdf
-apps/vue/public/resume.pdf
+# Сгенерированные PDF и тексты для hh.ru (собираются из content/)
+apps/next/public/*.pdf
+apps/vue/public/*.pdf
+hh/
 
 # Сборки
 apps/next/.next/
