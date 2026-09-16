@@ -26,13 +26,13 @@ jobs:
 
       - name: Install dependencies
         # package-lock.json генерируется на macOS и не содержит linux-бинарников
-        # опциональных зависимостей (rollup/esbuild) — известный баг npm (#4828).
+        # опциональных зависимостей (rollup/esbuild), это известный баг npm (#4828).
         # Поэтому в CI ставим начисто через npm install под linux-раннер.
         run: |
           rm -f package-lock.json
           npm install --no-audit --no-fund
 
-      # Puppeteer рендерит PDF в headless Chromium — ставим системные библиотеки.
+      # Puppeteer рендерит PDF в headless Chromium, ему нужны системные библиотеки.
       - name: Install Chrome libs for Puppeteer
         run: |
           sudo apt-get update
@@ -40,7 +40,7 @@ jobs:
             libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 \
             libgbm1 libpango-1.0-0 libcairo2 libasound2t64 || true
 
-      - name: Generate PDF (Node.js → resume.pdf)
+      - name: Generate PDF
         continue-on-error: true
         run: npm run pdf
 
@@ -48,12 +48,11 @@ jobs:
         run: npm run build:next
         env:
           NEXT_PUBLIC_SITE_BASE: /${{ github.event.repository.name }}
-          NEXT_PUBLIC_VUE_URL: vue/
 
       - name: Build Vue version (Vite)
         run: npm run build:vue
 
-      - name: Assemble site (Next → /, Vue → /vue)
+      - name: Assemble site (Next in /, Vue in /vue)
         run: |
           rm -rf public
           mkdir -p public
