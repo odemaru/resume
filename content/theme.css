@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
 
-/* Material Design 3 (light), bento layout. Shared by both apps.
-   Edit here; scripts/sync-content.mjs copies it into each build. */
+/* Material Design 3 (light), bento layout. Общая для обоих приложений:
+   правится здесь, scripts/sync-content.mjs копирует в каждую сборку. */
 
 :root {
   color-scheme: light;
@@ -104,6 +104,7 @@ a { color: inherit; text-decoration: none; }
 .fact-value { font-size: 15px; color: var(--on-surface); font-weight: 500; margin-top: 4px; }
 
 .about-text { color: var(--on-surface-variant); font-size: 15px; line-height: 1.65; }
+.about-text + .about-text { margin-top: 12px; }
 
 /* Experience */
 .job-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 6px; }
@@ -131,16 +132,11 @@ a { color: inherit; text-decoration: none; }
 .chip { height: 30px; display: inline-flex; align-items: center; font-size: 13px; color: var(--on-surface-variant); padding: 0 12px; border-radius: var(--shape-s); border: 1px solid var(--outline-variant); background: var(--surface-card); }
 .chip.mono { font-family: var(--mono); font-size: 12.5px; }
 
-.highlights { list-style: none; margin-top: 16px; display: grid; gap: 12px; }
+.highlights { list-style: none; margin-top: 14px; display: grid; gap: 10px; }
 .highlight { position: relative; padding-left: 22px; font-size: 14px; color: var(--on-surface-variant); line-height: 1.55; }
 .highlight::before { content: ''; position: absolute; left: 4px; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
-.highlight-title { color: var(--on-surface); font-weight: 500; }
-
-.metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.metric { height: 30px; display: inline-flex; align-items: center; font-size: 12.5px; font-weight: 500; font-family: var(--mono); color: var(--on-secondary-container); padding: 0 12px; border-radius: var(--shape-s); background: var(--secondary-container); }
-
-.brands { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-.brand-chip { height: 30px; display: inline-flex; align-items: center; font-size: 13px; color: var(--on-surface); padding: 0 12px; border-radius: 999px; border: 1px solid var(--outline-variant); background: var(--surface-card); }
+.project-link { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--primary); }
+.project-link:hover { text-decoration: underline; }
 
 /* Skills */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
@@ -153,6 +149,8 @@ a { color: inherit; text-decoration: none; }
 .lang-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--outline-variant); font-size: 15px; }
 .lang-row:last-child { border-bottom: none; }
 .lang-level { color: var(--on-surface-variant); }
+.pets { display: grid; gap: 20px; }
+.pet .contact-line { margin-top: 10px; }
 .pet-desc { color: var(--on-surface-variant); font-size: 14px; margin-top: 8px; line-height: 1.6; }
 
 /* Footer */

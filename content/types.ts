@@ -1,4 +1,5 @@
-// Resume data shape. Edited here, copied into both apps by scripts/sync-content.mjs.
+// Форма данных резюме. Правится здесь, в оба приложения копируется
+// скриптом scripts/sync-content.mjs.
 
 export interface Contacts {
   phone: string;
@@ -6,23 +7,20 @@ export interface Contacts {
   github: string;
 }
 
-export interface Highlight {
-  title: string;
-  text: string;
-}
-
 export interface Project {
   name: string;
   url?: string;
-  role: string;
+  /** Роль в проекте, показывается рядом с названием. */
+  role?: string;
   summary: string;
   stack: string[];
-  highlights: Highlight[];
-  metrics?: string[];
-  brands?: string[];
+  /** Пункты списка, по одному предложению-двум на каждый. */
+  highlights: string[];
 }
 
 export interface Experience {
+  /** Ключ, по которому вариант находит место работы в базе. */
+  id: string;
   company: string;
   companyUrl?: string;
   location: string;
@@ -64,6 +62,8 @@ export interface Resume {
   /** Файл фотографии в public каждого приложения. */
   photo?: string;
   title: string;
+  /** Специализации из справочника hh.ru, на сайте не показываются. */
+  specializations?: string[];
   tagline: string;
   age: number;
   birthDate: string;

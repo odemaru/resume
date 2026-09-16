@@ -3,10 +3,10 @@ import './theme.css';
 import { resume } from '@/lib/resume';
 
 export const metadata: Metadata = {
-  title: `${resume.shortName} — ${resume.title}`,
+  title: `${resume.shortName} · ${resume.title}`,
   description: resume.tagline,
   openGraph: {
-    title: `${resume.shortName} — ${resume.title}`,
+    title: `${resume.shortName} · ${resume.title}`,
     description: resume.tagline,
     type: 'profile',
   },

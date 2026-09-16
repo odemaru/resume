@@ -1,7 +1,5 @@
 <script setup lang="ts">
-// Ссылка ведёт на ту страницу Next, из которой собрана эта сборка,
-// иначе переключатель уводил бы на резюме с другим текстом.
-const NEXT_URL = import.meta.env.VITE_NEXT_URL || '../fullstack/';
+import { NEXT_URL } from '../lib/links';
 </script>
 
 <template>

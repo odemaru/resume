@@ -10,7 +10,7 @@ const r = (...p) => resolve(root, ...p);
 
 const targets = [
   {
-    // Next собирает все варианты: каждый получает свой адрес.
+    // Next собирает все варианты, каждый получает свой адрес.
     variant: variants[0].id,
     json: r('apps/next/data/resume.json'),
     types: r('apps/next/lib/resume-types.ts'),
@@ -26,7 +26,7 @@ const targets = [
   },
 ];
 
-const types = '// generated from content/types.ts — do not edit\n\n' + readFileSync(r('content/types.ts'), 'utf8');
+const types = '// generated from content/types.ts, do not edit\n\n' + readFileSync(r('content/types.ts'), 'utf8');
 const css = readFileSync(r('content/theme.css'), 'utf8');
 
 for (const t of targets) {
@@ -41,11 +41,11 @@ for (const t of targets) {
   }
 }
 
-// Остальные варианты нужны только сборке Next — каждый ложится своим файлом
+// Остальные варианты нужны только сборке Next, каждый ложится своим файлом
 // рядом с основным.
 for (const v of variants.slice(1)) {
   const file = resolve(dirname(targets[0].json), v.data);
   writeFileSync(file, JSON.stringify(loadVariant(root, v.id), null, 2) + '\n');
 }
 
-console.log(`разложено: Next — ${variants.length} варианта, Vue — «${vueVariant.id}»`);
+console.log(`разложено: Next ${variants.length} варианта, Vue «${vueVariant.id}»`);

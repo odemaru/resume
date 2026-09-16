@@ -18,12 +18,12 @@ function Chips({ items, mono }: { items: string[]; mono?: boolean }) {
 type Props = {
   /** Данные варианта: общая база с наложением под конкретную позицию. */
   data: ResumeData;
-  /** Имя файла PDF — у каждого варианта своё. */
+  /** Имя файла PDF, у каждого варианта своё. */
   pdf: string;
   /**
    * Путь до корня сайта. Пустой для главной, «../» для вложенной страницы:
-   * и фото, и PDF лежат в корне, а относительная ссылка со вложенного
-   * адреса искала бы их рядом с собой.
+   * фото, PDF и Vue-сборка лежат в корне, а относительная ссылка со
+   * вложенного адреса искала бы их рядом с собой.
    */
   base?: string;
   /** Переключатель на Vue показывается только там, где Vue-сборка совпадает по содержанию. */
@@ -33,6 +33,7 @@ type Props = {
 export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
   const telHref = `tel:${r.contacts.phone.replace(/[^+\d]/g, '')}`;
   const ghShort = r.contacts.github.replace('https://', '');
+  const vueUrl = base + 'vue/';
 
   const facts: [string, string][] = [
     ['Город', r.location],
@@ -43,7 +44,7 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
 
   return (
     <>
-      <TopBar pdf={base + pdf} showVue={showVue} />
+      <TopBar pdf={base + pdf} vue={vueUrl} showVue={showVue} />
       <main className="container">
         <div className="bento">
           <header className="card hero span-3">
@@ -99,11 +100,15 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
 
           <section className="card span-4">
             <div className="card-label">О себе</div>
-            <p className="about-text">{r.about}</p>
+            {r.about.split('\n\n').map((par) => (
+              <p className="about-text" key={par}>
+                {par}
+              </p>
+            ))}
           </section>
 
           {r.experience.map((job) => (
-            <section className="card span-4" key={job.company}>
+            <section className="card span-4" key={job.id}>
               <div className="job-header">
                 <div>
                   <div className="job-company">
@@ -130,12 +135,13 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
                 </div>
               </div>
 
-              {job.projects.map((p, i) => (
-                <details className="proj" key={p.name} open={job.current && i === 0 ? true : undefined}>
+              {/* Проекты раскрыты сразу: свёрнутое нанимающий не читает. */}
+              {job.projects.map((p) => (
+                <details className="proj" key={p.name} open>
                   <summary>
                     <span>
                       <span className="project-name">{p.name}</span>
-                      <span className="project-role">{p.role}</span>
+                      {p.role && <span className="project-role">{p.role}</span>}
                     </span>
                     <span className="chev">
                       <ChevronIcon />
@@ -143,33 +149,20 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
                   </summary>
                   <div className="proj-body">
                     {p.summary && <p className="project-summary">{p.summary}</p>}
-                    <Chips items={p.stack} mono />
-                    {p.brands && p.brands.length > 0 && (
-                      <div className="brands">
-                        {p.brands.map((b) => (
-                          <span key={b} className="brand-chip">
-                            {b}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                     {p.highlights.length > 0 && (
                       <ul className="highlights">
                         {p.highlights.map((h) => (
-                          <li className="highlight" key={h.title}>
-                            <span className="highlight-title">{h.title}.</span> {h.text}
+                          <li className="highlight" key={h}>
+                            {h}
                           </li>
                         ))}
                       </ul>
                     )}
-                    {p.metrics && p.metrics.length > 0 && (
-                      <div className="metrics">
-                        {p.metrics.map((m) => (
-                          <span key={m} className="metric">
-                            {m}
-                          </span>
-                        ))}
-                      </div>
+                    <Chips items={p.stack} mono />
+                    {p.url && (
+                      <a className="project-link" href={p.url} target="_blank" rel="noreferrer">
+                        {p.url.replace(/^https?:\/\//, '')}
+                      </a>
                     )}
                   </div>
                 </details>
@@ -195,7 +188,7 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
               <div key={e.institution}>
                 <div className="card-title">{e.institution}</div>
                 <div className="card-sub">
-                  {e.degree} · {e.year}
+                  {e.degree} · выпуск {e.year}
                 </div>
                 <div className="card-meta">
                   {e.faculty} · {e.location}
@@ -216,17 +209,19 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
 
           <section className="card span-4">
             <div className="card-label">Пет-проекты</div>
-            {r.petProjects.map((p) => (
-              <div key={p.name}>
-                <div className="card-title">{p.name}</div>
-                <p className="pet-desc">{p.description}</p>
-                {p.url && (
-                  <a className="contact-line" style={{ marginTop: 12 }} href={p.url} target="_blank" rel="noreferrer">
-                    <GitHubIcon /> Открыть на GitHub
-                  </a>
-                )}
-              </div>
-            ))}
+            <div className="pets">
+              {r.petProjects.map((p) => (
+                <div className="pet" key={p.name}>
+                  <div className="card-title">{p.name}</div>
+                  <p className="pet-desc">{p.description}</p>
+                  {p.url && (
+                    <a className="contact-line" href={p.url} target="_blank" rel="noreferrer">
+                      <GitHubIcon /> Открыть на GitHub
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </main>
@@ -237,7 +232,7 @@ export function Resume({ data: r, pdf, base = '', showVue = false }: Props) {
         </div>
         {showVue && (
           <div className="footer-note">
-            Next.js + React · <a href="vue/">та же страница на Vue</a>
+            Next.js + React · <a href={vueUrl}>та же страница на Vue</a>
           </div>
         )}
       </footer>

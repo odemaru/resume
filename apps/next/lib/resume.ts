@@ -1,12 +1,12 @@
-import qaa from '../data/resume.json';
-import fullstack from '../data/resume-fullstack.json';
+import qa from '../data/resume.json';
+import frontend from '../data/resume-frontend.json';
 import type { Resume } from './resume-types';
 
-/** Основной вариант — под позиции в тестировании. */
-export const resume = qaa as unknown as Resume;
+/** Основной вариант, под позиции в тестировании. */
+export const resume = qa as unknown as Resume;
 
 /**
- * Вариант под fullstack-позиции: та же база, другие заголовок, «о себе»
- * и навыки. Собирается наложением в scripts/variants.mjs.
+ * Вариант под frontend-позиции: та же база, другие заголовок, «о себе»,
+ * навыки и описание проектов. Собирается наложением в scripts/variants.mjs.
  */
-export const resumeFullstack = fullstack as unknown as Resume;
+export const resumeFrontend = frontend as unknown as Resume;

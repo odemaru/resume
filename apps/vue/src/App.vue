@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TopBar from './components/TopBar.vue';
 import { resume } from './lib/resume';
+import { NEXT_URL } from './lib/links';
 
 const r = resume;
 const telHref = `tel:${r.contacts.phone.replace(/[^+\d]/g, '')}`;
@@ -62,10 +63,10 @@ const facts: [string, string][] = [
 
       <section class="card span-4">
         <div class="card-label">О себе</div>
-        <p class="about-text">{{ r.about }}</p>
+        <p class="about-text" v-for="par in r.about.split('\n\n')" :key="par">{{ par }}</p>
       </section>
 
-      <section class="card span-4" v-for="job in r.experience" :key="job.company">
+      <section class="card span-4" v-for="job in r.experience" :key="job.id">
         <div class="job-header">
           <div>
             <div class="job-company">
@@ -84,11 +85,12 @@ const facts: [string, string][] = [
           </div>
         </div>
 
-        <details class="proj" v-for="(p, i) in job.projects" :key="p.name" :open="job.current && i === 0">
+        <!-- Проекты раскрыты сразу: свёрнутое нанимающий не читает. -->
+        <details class="proj" v-for="p in job.projects" :key="p.name" open>
           <summary>
             <span>
               <span class="project-name">{{ p.name }}</span>
-              <span class="project-role">{{ p.role }}</span>
+              <span v-if="p.role" class="project-role">{{ p.role }}</span>
             </span>
             <span class="chev">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
@@ -96,20 +98,13 @@ const facts: [string, string][] = [
           </summary>
           <div class="proj-body">
             <p v-if="p.summary" class="project-summary">{{ p.summary }}</p>
+            <ul v-if="p.highlights.length" class="highlights">
+              <li v-for="h in p.highlights" :key="h" class="highlight">{{ h }}</li>
+            </ul>
             <div v-if="p.stack.length" class="chips">
               <span v-for="s in p.stack" :key="s" class="chip mono">{{ s }}</span>
             </div>
-            <div v-if="p.brands && p.brands.length" class="brands">
-              <span v-for="b in p.brands" :key="b" class="brand-chip">{{ b }}</span>
-            </div>
-            <ul v-if="p.highlights.length" class="highlights">
-              <li v-for="h in p.highlights" :key="h.title" class="highlight">
-                <span class="highlight-title">{{ h.title }}.</span> {{ h.text }}
-              </li>
-            </ul>
-            <div v-if="p.metrics && p.metrics.length" class="metrics">
-              <span v-for="m in p.metrics" :key="m" class="metric">{{ m }}</span>
-            </div>
+            <a v-if="p.url" class="project-link" :href="p.url" target="_blank" rel="noreferrer">{{ p.url.replace(/^https?:\/\//, '') }}</a>
           </div>
         </details>
       </section>
@@ -130,7 +125,7 @@ const facts: [string, string][] = [
         <div class="card-label">Образование</div>
         <div v-for="e in r.education" :key="e.institution">
           <div class="card-title">{{ e.institution }}</div>
-          <div class="card-sub">{{ e.degree }} · {{ e.year }}</div>
+          <div class="card-sub">{{ e.degree }} · выпуск {{ e.year }}</div>
           <div class="card-meta">{{ e.faculty }} · {{ e.location }}</div>
         </div>
       </section>
@@ -145,13 +140,15 @@ const facts: [string, string][] = [
 
       <section class="card span-4">
         <div class="card-label">Пет-проекты</div>
-        <div v-for="p in r.petProjects" :key="p.name">
-          <div class="card-title">{{ p.name }}</div>
-          <p class="pet-desc">{{ p.description }}</p>
-          <a v-if="p.url" class="contact-line" :style="{ marginTop: '12px' }" :href="p.url" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z" /></svg>
-            Открыть на GitHub
-          </a>
+        <div class="pets">
+          <div class="pet" v-for="p in r.petProjects" :key="p.name">
+            <div class="card-title">{{ p.name }}</div>
+            <p class="pet-desc">{{ p.description }}</p>
+            <a v-if="p.url" class="contact-line" :href="p.url" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z" /></svg>
+              Открыть на GitHub
+            </a>
+          </div>
         </div>
       </section>
     </div>
@@ -159,6 +156,6 @@ const facts: [string, string][] = [
 
   <footer class="footer">
     <div>© {{ year }} {{ r.shortName }} · {{ r.title }}</div>
-    <div class="footer-note">Vue 3 + Vite · <a href="../fullstack/">та же страница на Next.js</a></div>
+    <div class="footer-note">Vue 3 + Vite · <a :href="NEXT_URL">та же страница на Next.js</a></div>
   </footer>
 </template>

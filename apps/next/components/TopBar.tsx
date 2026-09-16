@@ -1,20 +1,18 @@
 import { ReactLogo, VueLogo, DownloadIcon } from './icons';
 
-// relative 'vue/' points at the Vue build next to this one
-const VUE_URL = process.env.NEXT_PUBLIC_VUE_URL || 'vue/';
-
 type Props = {
-  /** Адрес PDF рядом со страницей. */
+  /** Адрес PDF относительно страницы. */
   pdf: string;
+  /** Адрес Vue-сборки относительно страницы. */
+  vue: string;
   /**
-   * Переключатель стека показывается только на основном варианте: Vue-сборка
-   * собирается из него же, и на других страницах ссылка вела бы на другое
-   * содержание.
+   * Переключатель стека показывается только на том варианте, из которого
+   * собрана Vue-версия: на других страницах ссылка вела бы на другой текст.
    */
   showVue?: boolean;
 };
 
-export function TopBar({ pdf, showVue = false }: Props) {
+export function TopBar({ pdf, vue, showVue = false }: Props) {
   return (
     <div className="topbar">
       <div className="topbar-inner">
@@ -28,7 +26,7 @@ export function TopBar({ pdf, showVue = false }: Props) {
               <span className="switch-opt active" aria-current="true">
                 <ReactLogo /> React · Next.js
               </span>
-              <a className="switch-opt" href={VUE_URL}>
+              <a className="switch-opt" href={vue}>
                 <VueLogo /> Vue
               </a>
             </div>
